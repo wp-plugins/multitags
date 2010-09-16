@@ -3,7 +3,7 @@
 Plugin Name: MultiTags
 Plugin URI: http://www.vogel-nest.de/wp_multitags_plugin
 Description: SEO-Improvement for tag-pages for keywords and description
-Version: 0.9
+Version: 0.2
 Author: Stefan Vogel
 Author URI: http://www.vogel-nest.de
 
@@ -86,7 +86,7 @@ class MultiTags {
     
     public function install() {
         // set default options
-        $this->getOptions();
+        $this->get_options();
     }
     
     public function admin_init() {
@@ -240,12 +240,11 @@ if (isset($oMultiTags)) {
 */
 function multi_tags_get_title($andOp = 'and', $orOp = 'or') {
     global $oMultiTags;
-    echo $oMultiTags->get_tag_title(' '.$andOp.' ', ' '.$orOp.' ');
+    return $oMultiTags->get_tag_title(' '.$andOp.' ', ' '.$orOp.' ');
 }
-
 
 function multi_tags_get_description($beforeDesc = '', $afterDesc = '') {
     global $oMultiTags;
-    echo $oMultiTags->get_tag_description($beforeDesc, $afterDesc);
+    return $oMultiTags->get_tag_description($beforeDesc, $afterDesc);
 }
 ?>
