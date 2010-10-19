@@ -3,7 +3,7 @@
 Plugin Name: MultiTags
 Plugin URI: http://www.vogel-nest.de/wp_multitags_plugin
 Description: SEO-Improvement for tag-pages for keywords and description
-Version: 0.2
+Version: 0.3
 Author: Stefan Vogel
 Author URI: http://www.vogel-nest.de
 
@@ -11,6 +11,7 @@ This software is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 
 class MultiTags {
     // cache the tags
@@ -180,27 +181,79 @@ class MultiTags {
         return '';
     }
     
-    public function get_tag_description($beforeDesc = '', $afterDesc = '') {
+    public function get_tag_description( $beforeDesc = '', $afterDesc = '' ) {
         $aoTags = $this->get_tags();
         if ($aoTags) {
             $lTagDescs = array();
-            foreach ($aoTags as $t) {
-                $tag = get_term_by ("slug",$t,"post_tag",OBJECT);
+            foreach ( $aoTags as $t ) {
+                $tag = get_term_by( "slug",$t,"post_tag",OBJECT );
                 $lTagDescs[] = $tag->description;
             }
-            if (count($lTagDescs)) {
-                return $beforeDesc.implode($afterDesc.$beforeDesc, $lTagDescs).$afterDesc;
+            if ( count( $lTagDescs ) ) {
+                return $beforeDesc.implode( $afterDesc.$beforeDesc, $lTagDescs ).$afterDesc;
             }
         }
         return '';
     }
 
-    public function settings_link($links, $file) {
- 	    if ($file == $this->adminFile) {
-		    $settings_link = '<a href="' . admin_url('options-general.php?page='.$this->adminFile).'">'.__('Settings').'</a>';
+    public function settings_link( $links, $file ) {
+ 	    if ( $file == $this->adminFile ) {
+		    $settings_link = '<a href="' . admin_url( 'options-general.php?page='.$this->adminFile ).'">'.__('Settings').'</a>';
 		    array_unshift( $links, $settings_link ); // before other links
 	    }
 	    return $links;
+    }
+    
+    
+    protected function getCurrentUrl() {
+        $pageUrl = 'http'.($_SERVER['HTTPS'] == 'on' ? 's': '').'://'.$_SERVER['SERVER_NAME'];
+        $pageUrl .= ($_SERVER['SERVER_PORT'] != '80' ? ':'.$_SERVER['SERVER_PORT'] : '').$_SERVER['REQUEST_URI'];
+        return $pageUrl;
+    }
+    
+    public function rss( $term_id, $feed = '' ) {
+        // get_tag_feed_link($tag_id, $feed)  in link-template.php
+        // calls: return get_term_feed_link($tag_id, 'post_tag', $feed);
+        if (is_tag()) {
+            $tag_slug = get_query_var('tag');
+            $tag_slug = str_replace(" ","+",$tag_slug);
+            if (strpos($tag_slug,",")===false) {
+                $tags = explode ("+", $tag_slug);
+                $tagOp = $andOp;
+            } else {
+                //bei , wird aus + bzw. Leerz. auch ODER
+                $tags = explode (",", str_replace("+",",",$tag_slug));
+                $tagOp = $orOp;
+            }        
+            $aoTags = $this->get_tags();
+            if ( !count( $aoTags ) ) {
+                return false;
+            }
+            
+            if ( count( $aoTags) == 1 ) {
+                // fallback to usual wp-behaviour
+                return get_tag_feed_link( $term_id, $feed );
+            } else {
+                if ( empty( $feed ) )
+                    $feed = get_default_feed();
+
+                $permalink_structure = get_option( 'permalink_structure' );
+
+                if ( '' == $permalink_structure ) {
+                        $link = home_url("?feed=$feed&amp;tag=$tag_slug");
+                } else {
+                    $term = get_term( $term_id, 'post_tag'  );
+                    $link = $this->getCurrentUrl();
+                    if ( $feed == get_default_feed() ) {                    
+                        $feed_link = 'feed';
+                    } else {
+                        $feed_link = "feed/$feed";                    
+                    }
+                    $link = trailingslashit( $link ) . user_trailingslashit( $feed_link, 'feed' );
+                }
+                return $link;
+            }
+        }
     }
 
 }
@@ -211,11 +264,12 @@ $oMultiTags = new MultiTags();
 // register the function we want to run when the plugin is activated:
 if (isset($oMultiTags)) {
     // register activation function 
-    register_activation_hook( __FILE__, array(&$oMultiTags, 'install') );
+    register_activation_hook(__FILE__, array(&$oMultiTags, 'install'));
     add_action('wp_head', array($oMultiTags, 'head'));
     add_action('wp_title', array($oMultiTags, 'title'));
     add_action('wp_footer', array(&$oMultiTags, 'footer'));
-    add_filter( 'plugin_action_links', array(&$oMultiTags, 'settings_link'), 9, 2 );
+    add_filter('plugin_action_links', array(&$oMultiTags, 'settings_link'), 9, 2);
+    // add_filter('feed_link',array(&$oMultiTags,'rss'), 10, 2); 
 }
 
 /**
@@ -238,13 +292,20 @@ if (isset($oMultiTags)) {
 * @param mixed $andOp what should be used to combine tags (+ operator)
 * @param mixed $orOp what should be used to combine tags (, operator)
 */
-function multi_tags_get_title($andOp = 'and', $orOp = 'or') {
+function multi_tags_get_title( $andOp = 'and', $orOp = 'or' ) {
     global $oMultiTags;
-    return $oMultiTags->get_tag_title(' '.$andOp.' ', ' '.$orOp.' ');
+    return $oMultiTags->get_tag_title( ' '.$andOp.' ', ' '.$orOp.' ' );
 }
 
-function multi_tags_get_description($beforeDesc = '', $afterDesc = '') {
+function multi_tags_get_description( $beforeDesc = '', $afterDesc = '' ) {
     global $oMultiTags;
-    return $oMultiTags->get_tag_description($beforeDesc, $afterDesc);
+    return $oMultiTags->get_tag_description( $beforeDesc, $afterDesc );
 }
+
+// similar to get_tag_feed_link - only correct with multiple tags
+function multi_tags_get_tag_feed_link( $term_id, $feed = '' ) {
+    global $oMultiTags;
+    return $oMultiTags->rss( $term_id, $feed );
+}
+
 ?>
