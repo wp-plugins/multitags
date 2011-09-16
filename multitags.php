@@ -3,7 +3,7 @@
 Plugin Name: MultiTags
 Plugin URI: http://www.vogel-nest.de/wp_multitags_plugin
 Description: SEO-Improvement for tag-pages for keywords and description
-Version: 0.3
+Version: 0.4
 Author: Stefan Vogel
 Author URI: http://www.vogel-nest.de
 
@@ -149,11 +149,11 @@ class MultiTags {
     }
     
     public function footer() {
-        $options = $this->get_options();
+        $options = $this->get_options();a
         if (is_tag() 
             && count($this->get_tags()) >= 2
             && $options['b_gratitude']) {
-            echo '<span id="multitagsthanks"><a href="http://www.vogel-nest.de/multitags" title="Wordpress MultiTags">MultiTags</a> powered by <a href="http://www.piratenspielzeug.com" title="Piraten Spielzeug">Piraten Spielzeug</a></span>';
+            echo '<span id="multitagsthanks">Generated with aid of <a href="http://www.vogel-nest.de/wp_multitags_plugin" title="Wordpress MultiTags">MultiTags</a></span>';
         }
     }
     
@@ -214,6 +214,8 @@ class MultiTags {
     public function rss( $term_id, $feed = '' ) {
         // get_tag_feed_link($tag_id, $feed)  in link-template.php
         // calls: return get_term_feed_link($tag_id, 'post_tag', $feed);
+        // $term = get_queried_object();
+        // print "<!-- ".print_r($term, true)." --!>";
         if (is_tag()) {
             $tag_slug = get_query_var('tag');
             $tag_slug = str_replace(" ","+",$tag_slug);

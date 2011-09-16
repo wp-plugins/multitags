@@ -3,8 +3,8 @@ Contributors: svogel
 Donate link: http://www.piratenspielzeug.com
 Tags: multitags, multiple tags, seo, meta keywords, meta description
 Requires at least: 2.8
-Tested up to: 3.0.1
-Stable tag: 0.3
+Tested up to: 3.2.1
+Stable tag: 0.4
 
 Display correct tags when calling a tag-page with more than one tag.
 
@@ -29,8 +29,8 @@ To display the correct tags, just replace the call to
 
 with
 
-`if (function_exists('get_multi_tags_get_title'))
-    echo get_multi_tags_get_title('and', 'or')
+`if (function_exists('multi_tags_get_title'))
+    echo multi_tags_get_title('and', 'or')
 else
     single_tag_title( '', false )`
 
@@ -87,6 +87,12 @@ else
 To Frank Bueltge http://bueltge.de for motivation and checking the first draft.
 
 == Changelog ==
+
+= 0.4 =
+
+* fixed typo in readme.txt
+* now testet with 3.2.1
+* MultiTags ist broken in WP 3.1.1 due to a bug in WP http://core.trac.wordpress.org/ticket/17054
 
 = 0.3 =
 
