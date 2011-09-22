@@ -4,7 +4,7 @@ Donate link: http://www.piratenspielzeug.com
 Tags: multitags, multiple tags, seo, meta keywords, meta description
 Requires at least: 2.8
 Tested up to: 3.2.1
-Stable tag: 0.4
+Stable tag: 0.5
 
 Display correct tags when calling a tag-page with more than one tag.
 
@@ -87,6 +87,11 @@ else
 To Frank Bueltge http://bueltge.de for motivation and checking the first draft.
 
 == Changelog ==
+
+= 0.5 =
+
+* fixed dump slipped in letter, that lead to syntax-error
+* I'm really sorry.
 
 = 0.4 =
 
