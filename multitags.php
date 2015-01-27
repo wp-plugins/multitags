@@ -3,7 +3,7 @@
 Plugin Name: MultiTags
 Plugin URI: http://www.vogel-nest.de/wp_multitags_plugin
 Description: SEO-Improvement for tag-pages for keywords and description
-Version: 0.5
+Version: 0.6
 Author: Stefan Vogel
 Author URI: http://www.vogel-nest.de
 
@@ -31,8 +31,8 @@ class MultiTags {
         }
 
         if (is_admin()) {
-            add_action('admin_menu', array(&$this, 'admin_menu'));
-            add_action('admin_init', array(&$this, 'admin_init'));
+            add_action('admin_menu', array($this, 'admin_menu'));
+            add_action('admin_init', array($this, 'admin_init'));
         }
     }
 
@@ -95,7 +95,7 @@ class MultiTags {
     }
     
     public function admin_menu() {
-        add_options_page('MultiTags', 'MultiTags', 1, $this->adminFile, array(&$this, 'handle_options'));
+        add_options_page('MultiTags', 'MultiTags', 1, $this->adminFile, array($this, 'handle_options'));
     }
         
     // admin-page with list of events, guestlists, ...
@@ -266,11 +266,11 @@ $oMultiTags = new MultiTags();
 // register the function we want to run when the plugin is activated:
 if (isset($oMultiTags)) {
     // register activation function 
-    register_activation_hook(__FILE__, array(&$oMultiTags, 'install'));
+    register_activation_hook(__FILE__, array($oMultiTags, 'install'));
     add_action('wp_head', array($oMultiTags, 'head'));
-    add_action('wp_title', array($oMultiTags, 'title'));
-    add_action('wp_footer', array(&$oMultiTags, 'footer'));
-    add_filter('plugin_action_links', array(&$oMultiTags, 'settings_link'), 9, 2);
+    add_action('wp_footer', array($oMultiTags, 'footer'));
+    add_filter('wp_title', array($oMultiTags, 'title'), 10);
+    add_filter('plugin_action_links', array($oMultiTags, 'settings_link'), 9, 2);
     // add_filter('feed_link',array(&$oMultiTags,'rss'), 10, 2); 
 }
 
@@ -278,7 +278,7 @@ if (isset($oMultiTags)) {
 * Use this in your theme tag.php-template
 * Examples (for http://www.piratenspielzeug.com/tag/playmobil+piraten):
 * 
-* <h2 class="dada"><?php multi_tagsget_title('und', 'or') ?></h2>
+* <h2 class="dada"><?php multi_tags_get_title('und', 'or') ?></h2>
 * 
 * will result in:
 * '<h2 class="dada">Playmobil und Piraten</h2>'
@@ -310,4 +310,3 @@ function multi_tags_get_tag_feed_link( $term_id, $feed = '' ) {
     return $oMultiTags->rss( $term_id, $feed );
 }
 
-?>

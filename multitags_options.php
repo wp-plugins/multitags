@@ -31,7 +31,8 @@ textarea.mt {
                 <td><input type="checkbox" name="multitags_options[b_show_title]"<?php echo $b_show_title ?> /></td>
                 <td class="row-title">Show modified tags in title</td>
                 <td>Set multiple tags (as in http://www.piratenspielzeug.com/tag/playmobil+piraten) correctly in the head-title-tag<br />
-                e.g. <code>&lt;head&gt;&lt;title&gt;Playmobil Piraten&lt;/title&gt;&lt;/head&gt;</code>)</td>
+                e.g. <code>&lt;head&gt;&lt;title&gt;Playmobil Piraten&lt;/title&gt;&lt;/head&gt;</code>)<br />
+                <i>Does not work in combination with the "All In One SEO Pack"-plugin.</i></td>
             </tr>
             <tr>
                 <td><input type="checkbox" name="multitags_options[b_show_meta]"<?php echo $b_show_meta ?> /></td>
@@ -44,8 +45,8 @@ textarea.mt {
                 <td class="row-title">Show your gratitude</td>
                 <td>This will put the text "<a href='http://www.vogel-nest.de/wp_multitags_plugin' title='Wordpress MultiTags'>MultiTags</a> powered by <a href='http://www.piratenspielzeug.com' title='Piraten Spielzeug'>Piraten Spielzeug</a>" in the footer of your blogs.<br />
                 The gratitude-text is written <i>only</i> in the footer of the tag-pages containing multiple tags, only where the plugin really does it's work :-)).<br />
-                Be nice and honour this work. Thank you!<br />
-                If you like to style the "gratitude"-text (it is put inside <code>&lt;span id="multitagsthanks"&gt;...&lt;/span&gt;</code>)</td>
+                I really appreciate your help to support my work. Thank you!<br />
+                (You can style the "gratitude"-text as you like with CSS (it is put inside <code>&lt;span id="multitagsthanks"&gt;...&lt;/span&gt;</code>)</td>
             </tr>
 </tbody>
         </table>
@@ -56,7 +57,6 @@ textarea.mt {
 <p>Thanks a lot for using <strong>MultiTags</strong>!</p>
 <p>If you find any errors or problems don't hesitate to <a href="http://www.vogel-nest.de/multitags" rel="external" target="_blank">comment</a> or <a href="mailto:stefan@vogel-nest.de">contact me</a>. You can also send me suggestions or improvements - whatever (besides SPAM) ;-)</p>
 <p>You can find a <a href="http://www.vogel-nest.de/wp_multitags_plugin" rel="external" target="_blank">complete description/documentation with some examples on my plugin-page</a>.</p>
-<p><strong>Thanks</strong> to <a href="http://bueltge.de" rel="external" target="_blank">Frank Bueltge</a> for testing and feedback!</p>
 </fieldset>
 </div>
 
@@ -69,20 +69,13 @@ It only takes seconds (or only one click) for you and you will greatly honour my
 <p>
 You could do me a great favour if you simply:
 <ul style="list-style:square;padding-left:30px;">
+<li>Write a <a href="http://wordpress.org/extend/plugins/multitags/" rel="external" target="_blank">review or rate the plugin on Wordpress</a> (&laquo; <i>click</i>)</li>
 <li><a href="http://twitter.com/home?status=%40piratspielzeug+Thanks+for+WP+MultiTags+http%3a%2f%2fbit.ly%2fwp_multitags+powered+by+http%3a%2f%2fwww.piratenspielzeug.com" rel="external" target="_blank">twitter a thanks message</a> (&laquo; <i>click</i>)</li>
 <li>bookmark my plugin-page on your favourite bookmark-site: 
-<!-- Seitzeichen -->
 <script type="text/javascript">var szu=encodeURIComponent('http://www.vogel-nest.de/wp_multitags_plugin'); var szt=encodeURIComponent('MultiTags plugin for Wordpress').replace(/\'/g,'`'); var szjsh=(window.location.protocol == 'https:'?'https://ssl.seitzeichen.de/':'http://w4.seitzeichen.de/'); document.write(unescape("%3Cscript src='" + szjsh + "w/02/79/widget_0279afe1d5a12c73081232374101c6eb.js' type='text/javascript'%3E%3C/script%3E"));</script>
-<!-- Seitzeichen -->
-or bookmark/appreciate <i>Piraten Spielzeug</i>
-<!-- Seitzeichen -->
-<script type="text/javascript">var szu=encodeURIComponent('http://www.piratenspielzeug.com'); var szt=encodeURIComponent('Piraten Spielzeug').replace(/\'/g,'`'); var szjsh=(window.location.protocol == 'https:'?'https://ssl.seitzeichen.de/':'http://w4.seitzeichen.de/'); document.write(unescape("%3Cscript src='" + szjsh + "w/02/79/widget_0279afe1d5a12c73081232374101c6eb.js' type='text/javascript'%3E%3C/script%3E"));</script>
-<!-- Seitzeichen -->
 </li>
 <li>Spread the word - <a href="<?php echo admin_url('post-new.php') ?>">write a blogpost</a>! (&laquo; <i>click</i> and start) <strong>That would really be great</strong>! Especially if you recommend this plugin. ;-)</li>
 <li>Put <a href="<?php echo admin_url('link-add.php?name=Kleine%20Dinge&linkurl=http%3a%2f%2fwww.vogel-nest.de') ?>">http://www.vogel-nest.de</a> or <a href="<?php echo admin_url('link-add.php?name=Piraten%20Spielzeug&linkurl=http%3a%2f%2fwww.piratenspielzeug.com') ?>">http://www.piratenspielzeug.com</a> in your Blogroll (&laquo; simply click those links to add!)</li>
-<li>Write a <a href="http://wordpress.org/extend/plugins/multitags/" rel="external" target="_blank">review or rate the plugin on Wordpress</a> (&laquo; <i>click</i>)</li>
-<li>Write a comment on <a href="http://www.vogel-nest.de/wp_multitags_plugin" rel="external" target="_blank">http://www.vogel-nest.de/wp_multitags_plugin</a></li>
 <li>Manually place a link where you dare (use this code):<br /><textarea class="mt" rows="3" cols="70"><a href="http://www.vogel-nest.de/wp_multitags_plugin">Multitags WordPress Plugin</a> powered by <a href="http://www.piratenspielzeug.com">Piraten Spielzeug</a></textarea>
 <li>If you don't like it, you can always reply to <a href="mailto:stefan@vogel-nest.de">stefan@vogel-nest.de</a> (that would also be appreciated!) - you can even mail me <strong>if</strong> you like it :-)</li>
 </ul>
