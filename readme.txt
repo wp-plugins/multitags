@@ -3,8 +3,8 @@ Contributors: svogel
 Donate link: http://www.piratenspielzeug.com
 Tags: multitags, multiple tags, seo, meta keywords, meta description
 Requires at least: 2.8
-Tested up to: 3.2.1
-Stable tag: 0.5
+Tested up to: 4.1
+Stable tag: 0.6
 
 Display correct tags when calling a tag-page with more than one tag.
 
@@ -58,21 +58,21 @@ Just the usual procedure
 
 You have to handcraft a little bit and change the core. However I don't recommend it, because after upgrading you 
 have to insert your change again. So be careful.
-Go to wp-includes/general-template.php and find the lines:
+Go to wp-includes/general-template.php and find the lines (around lineno 2294):
 
-`$title = esc_attr(sprintf( $args['tagtitle'], get_bloginfo('name'), $args['separator'], $tag->name ));
-$href = get_tag_feed_link( $tag_id );`
+`$title = sprintf( $args['tagtitle'], get_bloginfo('name'), $args['separator'], $term->name );
+$href = get_tag_feed_link( $term->term_id );`
 
 replace it with:
 
 `if ( function_exists('multi_tags_get_title') )
-    $title = esc_attr(sprintf( $args['tagtitle'], get_bloginfo('name'), $args['separator'], multi_tags_get_title() ));
+    $title = sprintf( $args['tagtitle'], get_bloginfo('name'), $args['separator'], multi_tags_get_title() );
 else
-    $title = esc_attr(sprintf( $args['tagtitle'], get_bloginfo('name'), $args['separator'], $tag->name ));
+    $title = sprintf( $args['tagtitle'], get_bloginfo('name'), $args['separator'], $term->name );
 if ( function_exists('multi_tags_get_tag_feed_link') )
-    $href = multi_tags_get_tag_feed_link( $tag_id );
+    $href = multi_tags_get_tag_feed_link( $term->term_id );
 else
-    $href = get_tag_feed_link( $tag_id );`
+    $href = get_tag_feed_link( $term->term_id );`
 
 
 == Screenshots ==
@@ -87,6 +87,11 @@ else
 To Frank Bueltge http://bueltge.de for motivation and checking the first draft.
 
 == Changelog ==
+
+= 0.6 =
+
+Adapted to wordpress >= 4
+Corrected feed-url-code in readme.txt
 
 = 0.5 =
 
